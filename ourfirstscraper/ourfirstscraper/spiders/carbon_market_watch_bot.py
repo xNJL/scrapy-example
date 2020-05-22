@@ -58,12 +58,12 @@ def get_article_info(response):
     d['categories'] = get_categories(response)
     d['tags'] = get_tags(response) if "Tagged in" in headers else []
     d["title"] = response.css('h1::text').get().strip()
-    d["sub_title"] = response.css('h1::text').get().strip()
+    # d["sub_title"] = response.css('h1::text').get().strip()
     try:
-        d["abstract"] = response.css('i > span::text').get().strip()
         d['date_published'] = datetime.strptime(paragraph[1].strip(), '%d %b %Y')
+        # d["abstract"] = response.css('i > span::text').get().strip()
     except:
-        d["abstract"] = None
+        # d["abstract"] = None
         d['date_published'] = None
     d['link'] = response.url
 

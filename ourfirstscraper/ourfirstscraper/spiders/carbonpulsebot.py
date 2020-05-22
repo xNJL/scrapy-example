@@ -1,26 +1,20 @@
 # -*- coding: utf-8 -*-
 
 import scrapy
-
-# Logging packages
 import logging
-import logzero
-from logzero import logger
+
 
 class CarbonpulsebotSpider(scrapy.Spider):
     name = "carbonpulsebot"
 
     custom_settings = {
         'FEED_FORMAT': 'csv',
-        'FEED_URI': 'data/articles.csv'
+        'FEED_URI': 'data/articles.csv',
+        'LOG_LEVEL': 'INFO'
     }
 
     def __init__(self, *args, **kwargs):
-        super(CarbonpulsebotSpider, self).__init__(*args, **kwargs)
-
-        # Set logging level
-        logzero.loglevel(logging.WARNING)
-
+        super().__init__(*args, **kwargs)
         # To track the evolution of scrapping
         self.page = 0
 
@@ -35,7 +29,7 @@ class CarbonpulsebotSpider(scrapy.Spider):
     def parse(self, response):
 
         # Display a message in the console
-        logger.warn(f' > PARSING NEW PAGE OF ARTICLES ({self.page})')
+        self.logger.info(f' > PARSING NEW PAGE OF ARTICLES ({self.page})')
         self.page += 1
 
         for article in response.css('div.post'):
